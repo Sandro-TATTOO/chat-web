@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('message', function(data) {
+            const chatLog = document.querySelector('#chat-log');
+            chatLog.value += (data + '\n');
+        });
+
+        function sendMessage() {
+            const messageInput = document.querySelector('#chat-message-input');
+            const message = messageInput.value;
+            socket.emit('message', message);
+            messageInput.value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>Bem-vindo ao chat!</h1>
+    <textarea id="chat-log" cols="30" rows="10" readonly></textarea><br>
+    <input id="chat-message-input" type="text" size="100">
+    <button onclick="sendMessage()">Enviar</button>
+</body>
+</html>
